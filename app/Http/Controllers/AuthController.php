@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-   
-   
+
     public function checktoken(Request $request)
     {
         $user = $request->user();
@@ -33,10 +32,12 @@ class AuthController extends Controller
 
         $validated = $validator->validated();
 
-        if (!auth()->attempt([
+        if (
+            !auth()->attempt([
                 filter_var($validated["name"], FILTER_VALIDATE_EMAIL) ? "email" : "name" => $validated["name"],
                 "password" => $validated["password"]
-            ])){
+            ])
+        ) {
             return $this->Unauthorized();
         }
 
@@ -44,11 +45,11 @@ class AuthController extends Controller
         $user = auth()->user();
         $user->profile;
 
-        return $this->authenticated([$user],$token ,"Logged in succesfully");
-        
+        return $this->authenticated([$user], $token, "Logged in succesfully");
+
     }
 
-    //register checker
+    //validator
     public function register(Request $request)
     {
         $validator = validator($request->all(), [
@@ -59,15 +60,12 @@ class AuthController extends Controller
             "last_name" => "required|string|max:64|min:1"
         ]);
 
-        // $extension = $request->file('picture_extension')->getClientOriginalExtension();
-        
         if ($validator->fails()) {
             return $this->BadRequest($validator);
         }
         //this creates the user login information in the users table
         $user = User::create($validator->safe()->only("name", "email", "password"));
-        $profile_data = $validator->safe()->except("name", "email", "password", "picture_extension");
-        // $profile_data["picture_extension"] = $extension;
+        $profile_data = $validator->safe()->except("name", "email", "password");
         $user->profile()->create($profile_data);
         return $this->created($user, "account was succesfully created!");
     }

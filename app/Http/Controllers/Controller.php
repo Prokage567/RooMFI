@@ -12,7 +12,7 @@ abstract class Controller
 
     protected function created($data = [], $message = "created!"){
         return response()->json([
-            "ok"=> true,
+            "created"=> true,
             "data" => $data,
             "message" => $message
         ], 200);
@@ -37,7 +37,7 @@ abstract class Controller
      */
     protected function Unauthorized($message = "Invalid credentials!"){
         return response()->json([
-            "ok" => false,
+            "Valid Credentials" => false,
             "message" => $message
         ], 401);
     }
@@ -50,7 +50,7 @@ abstract class Controller
 
     protected function authenticated($data = [], $token, $message = "ok!"){
         return response()->json([
-            "ok" => true,
+            "Aunthenticated" => true,
             "data" => $data,
             "token" => $token,
             "message"=> $message
