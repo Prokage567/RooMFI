@@ -22,6 +22,7 @@ Route::prefix("/room")->group(function(){
     route::patch("/{room}", [App\Http\Controllers\RoomController::class,"update"])->middleware("auth:api");
     route::delete("/{room}", [App\Http\Controllers\RoomController::class,"delete"])->middleware("auth:api");
 });
+// done by Clare
 
 Route::prefix("/teacher")->group(function () {
     Route::get("/", [App\http\Controllers\TeacherController::class, "all"])->middleware("auth:api");
