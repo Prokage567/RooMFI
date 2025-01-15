@@ -6,13 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    public function section(){
-        return $this->belongsTo(Section::class);
+    public function section()
+    {
+        return $this->hasOne(Section::class);
     }
-    public function room(){
-        return $this->belongsTo(Room::class);
+    public function room()
+    {
+        return $this->hasOne(Room::class);
     }
-    public function teacher(){
-        return $this->belongsTo(Teacher::class);
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
     }
+    protected $fillable = [
+        "day",
+        "start_time",
+        "end_time",
+        "teacher_id",
+        "section_id",
+        "room_id",
+    ];
 }

@@ -9,4 +9,7 @@ class Teacher extends Model
     public function schedule(){
         return $this->belongsToMany(Schedule::class);
     }
+    protected $fillable = [
+        "name",
+    ];
 }

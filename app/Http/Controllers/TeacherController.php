@@ -8,25 +8,32 @@ use Illuminate\Http\Request;
 class TeacherController extends Controller
 {
     public function all(){
-        return $this->ok(Teacher::all(), "all teachers");
+        return $this->ok(Teacher::all(), "all Teachers!");
+    }
+    public function show(Teacher $teacher){
+        return $this->ok($teacher,"Teacher's name!");
     }
     public function store(Request $request){
+        if ($request->user()->role_id != "admin") {
+            return $this->Unauthorized("you are not an Admin!");
+        }
         $validator = validator($request->all(), [
-            "teacher_name" => "required|string",
+            "name" => "required|string|uppercase",
         ]);
         if ($validator->fails()) {
-            return $this->BadRequest($validator, "invalid input");
+            return $this->BadRequest($validator, "invalid input!");
         }
-
         $validated = $validator->validated();
-        $validated["user_id"] = $request->user()->id;
 
-        $order = Teacher::create($validated);
+        $teacher = Teacher::create($validated);
 
-        return $this->ok($order, "Order Created");
+        return $this->ok($teacher, "Teacher Added!");
     }
-    public function delete(Teacher $teacher){
+    public function delete(Request $request, Teacher $teacher){
+        if ($request->user()->role_id != "admin") {
+            return $this->Unauthorized("you are not an Admin!");
+        }
         $teacher->delete();
-        return $this->ok(null,"product has been deleted");
+        return $this->ok(null,"Teacher has been deleted!");
     }
 }

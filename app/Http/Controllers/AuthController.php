@@ -12,11 +12,7 @@ class AuthController extends Controller
     {
         $user = $request->user();
         $user->profile();
-        return response()->json([
-            "ok" => false,
-            "user" => $user,
-            "message" => "token is valid"
-        ]);
+        return $this->ok($user,"token is valid");
     }
 
     public function login(Request $request)
@@ -45,7 +41,7 @@ class AuthController extends Controller
         $user = auth()->user();
         $user->profile;
 
-        return $this->authenticated([$user], $token, "Logged in succesfully");
+        return $this->authenticated($user, $token, "Logged in succesfully!");
 
     }
 
@@ -64,7 +60,7 @@ class AuthController extends Controller
             return $this->BadRequest($validator);
         }
         //this creates the user login information in the users table
-        $user = User::create($validator->safe()->only("name", "email", "password"));
+        $user = User::create($validator->safe()->only("name", "email", "password","role_id"));
         $profile_data = $validator->safe()->except("name", "email", "password");
         $user->profile()->create($profile_data);
         return $this->created($user, "account was succesfully created!");

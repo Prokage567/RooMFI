@@ -17,11 +17,11 @@ class Profile extends Model
 
     protected $fillable = [
         "first_name",
-        "middle_name",
         "last_name",
-        "picture_extension"
     ];
 
+    public $timestamps = false;
+    
     public function user()
     {
         return $this->belongsto(User::class);
