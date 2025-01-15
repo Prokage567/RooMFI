@@ -15,6 +15,14 @@ Route::get("/{section}", [App\http\Controllers\SectionController::class, "show"]
 Route::delete("/{section}", [App\http\Controllers\SectionController::class, "delete"])->middleware("auth:api");
 });
 
+Route::prefix("/room")->group(function(){
+    route::get("/", [App\Http\Controllers\RoomController::class,"all"])->middleware("auth:api");
+    route::get("/{room}", [App\Http\Controllers\RoomController::class,"show"])->middleware("auth:api");
+    route::post("/", [App\Http\Controllers\RoomController::class,"store"])->middleware("auth:api");
+    route::patch("/{room}", [App\Http\Controllers\RoomController::class,"update"])->middleware("auth:api");
+    route::delete("/{room}", [App\Http\Controllers\RoomController::class,"delete"])->middleware("auth:api");
+});
+
 Route::prefix("/teacher")->group(function () {
     Route::get("/", [App\http\Controllers\TeacherController::class, "all"])->middleware("auth:api");
     Route::post("/", [App\http\Controllers\TeacherController::class, "store"])->middleware("auth:api");
