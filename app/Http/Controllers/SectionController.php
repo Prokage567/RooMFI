@@ -28,8 +28,28 @@ class SectionController extends Controller
          return $this->BadRequest($validator);
       }
       $validated = $validator->validated();
+
       $section = Section::create($validated);
-      return $this->ok($validated, "account was succesfully created!");
+
+      return $this->ok($validated, "Section was succesfully created!");
+   }
+   public function update(Request $request, Section $section)
+   {
+      if ($request->user()->role_id != "admin") {
+         return $this->Unauthorized("you are not an Admin!");
+      }
+      $validator = validator($request->all(), [
+         "name" => "required|min:3|max:32|alpha_dash|string"
+      ]);
+
+      if ($validator->fails()) {
+         return $this->BadRequest($validator);
+      }
+      $validated = $validator->validated();
+
+      $section->update($validated);
+
+      return $this->ok($validated, "Section was succesfully updated!");
    }
    public function delete(Request $request, Section $section)
    {

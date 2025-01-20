@@ -12,6 +12,7 @@ Route::prefix("/section")->group(function () {
 Route::get("/", [App\http\Controllers\SectionController::class, "all"])->middleware("auth:api");
 Route::post("/", [App\http\Controllers\SectionController::class, "store"])->middleware("auth:api");
 Route::get("/{section}", [App\http\Controllers\SectionController::class, "show"])->middleware("auth:api");
+Route::get("/{section}", [App\http\Controllers\SectionController::class, "update"])->middleware("auth:api");
 Route::delete("/{section}", [App\http\Controllers\SectionController::class, "delete"])->middleware("auth:api");
 });
 
@@ -28,6 +29,7 @@ Route::prefix("/teacher")->group(function () {
     Route::get("/", [App\http\Controllers\TeacherController::class, "all"])->middleware("auth:api");
     Route::post("/", [App\http\Controllers\TeacherController::class, "store"])->middleware("auth:api");
     Route::get("/{teacher}", [App\http\Controllers\TeacherController::class, "show"])->middleware("auth:api");
+    Route::patch("/{teacher}", [App\http\Controllers\TeacherController::class, "update"])->middleware("auth:api");
     Route::delete("/{teacher}", [App\http\Controllers\TeacherController::class, "delete"])->middleware("auth:api");
 });
 

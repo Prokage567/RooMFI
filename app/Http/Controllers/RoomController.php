@@ -36,6 +36,7 @@ class RoomController extends Controller
     public function store(Request $request){
         $validator = validator($request -> all(),[
             "name" => "required|String",
+            "type" => "required|String",
         ]);
         if($validator->fails()){
             return $this->BadRequest($validator,"Invalid input!");
@@ -58,6 +59,7 @@ class RoomController extends Controller
     public function update(Request $request,Room $room){
         $validator = validator($request -> all(),[
             "name" => "required|String",
+            "type" => "required|String",
         ]);
         if($validator->fails()){
             return $this->BadRequest($validator,"Invalid input!");
@@ -66,6 +68,7 @@ class RoomController extends Controller
         $validated = $validator->validated();
 
         $room->update($validated);
+        
         return $this->ok($validated,"Room has been updated!");
     }
 

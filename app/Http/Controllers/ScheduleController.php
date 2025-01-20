@@ -22,8 +22,7 @@ class ScheduleController extends Controller
         }
         $validator = validator($request->all(), [
             "day" => "required|int",
-            "start_time" => "required|time",
-            "end_time" => "required|time",
+            "date" => "required|date",
             "teacher_id" => "required|exists:teachers,id",
             "section_id" => "required|exists:sections,id",
             "room_id" => "required|exists:rooms,id",
@@ -41,8 +40,7 @@ class ScheduleController extends Controller
             return $this->Unauthorized("you are not an Admin!");
         }
         $validator = validator($request->all(), [
-            "start_time" => "required|time",
-            "end_time" => "required|time",
+            "date" => "required|date",
             "teacher_id" => "required|exists:teachers,id",
             "section_id" => "required|exists:sections,id",
             "room_id" => "required|exists:rooms,id",
@@ -51,7 +49,9 @@ class ScheduleController extends Controller
             return $this->BadRequest($validator, "you have input invalid informations!");
         }
         $validated = $validator->validated();
+
         $schedule->update($validated);
+        
         return $this->ok($validated, "Succesfully updated a Schedule!");
     }
     public function delete(Request $request, Schedule $schedule)

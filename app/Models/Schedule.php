@@ -19,9 +19,7 @@ class Schedule extends Model
         return $this->hasOne(Teacher::class);
     }
     protected $fillable = [
-        "day",
-        "start_time",
-        "end_time",
+        "date",
         "teacher_id",
         "section_id",
         "room_id",
