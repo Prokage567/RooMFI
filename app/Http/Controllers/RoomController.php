@@ -23,7 +23,10 @@ class RoomController extends Controller
      * @param \App\Models\Room $room
      * @return JsonResponse|mixed
      */
-    public function show(Room $room){
+    public function show(Room $room,Request $request){
+        if ($request->user()->role_id != "admin") {
+            return $this->Forbidden("you are not an Admin!");
+        }
         return $this->ok($room, "Room name!");
     }    
     
@@ -34,6 +37,9 @@ class RoomController extends Controller
      * @return JsonResponse|mixed
      */
     public function store(Request $request){
+        if ($request->user()->role_id != "admin") {
+            return $this->Forbidden("you are not an Admin!");
+        }
         $validator = validator($request -> all(),[
             "name" => "required|String",
             "type" => "required|String",
@@ -57,6 +63,9 @@ class RoomController extends Controller
      * @return JsonResponse|mixed
      */
     public function update(Request $request,Room $room){
+        if ($request->user()->role_id != "admin") {
+            return $this->Forbidden("you are not an Admin!");
+        }
         $validator = validator($request -> all(),[
             "name" => "required|String",
             "type" => "required|String",
@@ -78,7 +87,10 @@ class RoomController extends Controller
      * @param \App\Models\Room $room
      * @return JsonResponse|mixed
      */
-    public function delete(Room $room){
+    public function delete(Room $room, Request $request){
+        if ($request->user()->role_id != "admin") {
+            return $this->Forbidden("you are not an Admin!");
+        }
         $room->delete();
         return $this->ok(null,"Room has been deleted!");
     }

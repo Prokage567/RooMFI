@@ -65,4 +65,8 @@ class AuthController extends Controller
         $user->profile()->create($profile_data);
         return $this->created($user, "account was succesfully created!");
     }
+    public function logout(Request $request) {
+        $request->user()->accessToken()->delete();
+        return $this->ok(null,"");
+    }
 }

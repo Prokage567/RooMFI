@@ -18,7 +18,7 @@ class SectionController extends Controller
    public function store(Request $request)
    {
       if ($request->user()->role_id != "admin") {
-         return $this->Unauthorized("you are not an Admin!");
+         return $this->Forbidden("you are not an Admin!");
       }
       $validator = validator($request->all(), [
          "name" => "required|min:3|max:32|alpha_dash|string"
@@ -36,7 +36,7 @@ class SectionController extends Controller
    public function update(Request $request, Section $section)
    {
       if ($request->user()->role_id != "admin") {
-         return $this->Unauthorized("you are not an Admin!");
+         return $this->Forbidden("you are not an Admin!");
       }
       $validator = validator($request->all(), [
          "name" => "required|min:3|max:32|alpha_dash|string"
@@ -54,7 +54,7 @@ class SectionController extends Controller
    public function delete(Request $request, Section $section)
    {
       if ($request->user()->role_id != "admin") {
-         return $this->Unauthorized("you are not an Admin!");
+         return $this->Forbidden("you are not an Admin!");
       }
       $section->null();
       return $this->ok(null, " A section has been deleted!");

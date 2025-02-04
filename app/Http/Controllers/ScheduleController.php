@@ -18,7 +18,7 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         if ($request->user()->role_id != "admin") {
-            return $this->Unauthorized("you are not an Admin!");
+            return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request->all(), [
             "day" => "required|int",
@@ -37,7 +37,7 @@ class ScheduleController extends Controller
     public function update(Request $request, Schedule $schedule)
     {
         if ($request->user()->role_id != "admin") {
-            return $this->Unauthorized("you are not an Admin!");
+            return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request->all(), [
             "date" => "required|date",
@@ -51,13 +51,13 @@ class ScheduleController extends Controller
         $validated = $validator->validated();
 
         $schedule->update($validated);
-        
+
         return $this->ok($validated, "Succesfully updated a Schedule!");
     }
     public function delete(Request $request, Schedule $schedule)
     {
         if ($request->user()->role_id != "admin") {
-            return $this->Unauthorized("you are not an Admin!");
+            return $this->Forbidden("you are not an Admin!");
         }
         $schedule->delete();
         return $this->ok(null, "A Schedule has been deleted!");

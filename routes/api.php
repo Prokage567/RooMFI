@@ -7,6 +7,7 @@ use PHPUnit\Framework\Attributes\Group;
 Route::post("/register", [App\http\Controllers\AuthController::class, "register"]);
 Route::post("/login", [App\http\Controllers\AuthController::class, "login"]);
 route::middleware("auth:api")->get("/checktoken", [App\http\Controllers\AuthController::class, "checktoken"]);
+route::middleware("auth:api")->post("/logout", [App\http\Controllers\AuthController::class, "logout"]);
 
 Route::prefix("/section")->group(function () {
 Route::get("/", [App\http\Controllers\SectionController::class, "all"])->middleware("auth:api");
@@ -23,7 +24,6 @@ Route::prefix("/room")->group(function(){
     route::patch("/{room}", [App\Http\Controllers\RoomController::class,"update"])->middleware("auth:api");
     route::delete("/{room}", [App\Http\Controllers\RoomController::class,"delete"])->middleware("auth:api");
 });
-// done by Clare
 
 Route::prefix("/teacher")->group(function () {
     Route::get("/", [App\http\Controllers\TeacherController::class, "all"])->middleware("auth:api");

@@ -41,6 +41,12 @@ abstract class Controller
             "message" => $message
         ], 401);
     }
+    protected function Forbidden($message = "Invalid credentials!"){
+        return response()->json([
+            "Valid Credentials" => false,
+            "message" => $message
+        ], 403);
+    }
 
     /** this is when the user's credentials were accepted
     * @param mixed $data
@@ -50,7 +56,7 @@ abstract class Controller
 
     protected function authenticated($data = [], $token, $message = "ok!"){
         return response()->json([
-            "Aunthenticated" => true,
+            "Authenticated" => true,
             "data" => $data,
             "token" => $token,
             "message"=> $message

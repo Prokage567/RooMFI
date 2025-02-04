@@ -18,7 +18,7 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         if ($request->user()->role_id != "admin") {
-            return $this->Unauthorized("you are not an Admin!");
+            return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request->all(), [
             "name" => "required|string|uppercase",
@@ -36,7 +36,7 @@ class TeacherController extends Controller
     public function update(Request $request, Teacher $teacher)
     {
         if ($request->user()->role_id != "admin") {
-            return $this->Unauthorized("you are not an Admin!");
+            return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request->all(), [
             "name" => "required|string|uppercase",
@@ -55,7 +55,7 @@ class TeacherController extends Controller
     public function delete(Request $request, Teacher $teacher)
     {
         if ($request->user()->role_id != "admin") {
-            return $this->Unauthorized("you are not an Admin!");
+            return $this->Forbidden("you are not an Admin!");
         }
         $teacher->delete();
         return $this->ok(null, "Teacher has been deleted!");
