@@ -25,6 +25,8 @@ Route::prefix("/room")->group(function(){
     route::delete("/{room}", [App\Http\Controllers\RoomController::class,"delete"])->middleware("auth:api");
 });
 
+
+
 Route::prefix("/teacher")->group(function () {
     Route::get("/", [App\http\Controllers\TeacherController::class, "all"])->middleware("auth:api");
     Route::post("/", [App\http\Controllers\TeacherController::class, "store"])->middleware("auth:api");

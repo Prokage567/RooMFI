@@ -41,7 +41,7 @@ abstract class Controller
             "message" => $message
         ], 401);
     }
-    protected function Forbidden($message = "Invalid credentials!"){
+    protected function Forbidden($message = " Unauthorized!"){
         return response()->json([
             "Valid Credentials" => false,
             "message" => $message
