@@ -22,10 +22,10 @@ class ScheduleController extends Controller
         }
         $validator = validator($request->all(), [
             "day" => "required|int",
-            "date" => "required|date",
+            "date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",
             "section_id" => "required|exists:sections,id",
-            "room_id" => "required|exists:rooms,id",
+            "room_id" => "required|exists:rooms,id"
         ]);
         if ($validator->fails()) {
             return $this->BadRequest($validator, "you have input invalid informations!");
@@ -40,10 +40,11 @@ class ScheduleController extends Controller
             return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request->all(), [
+            "day" => "required|int",
             "date" => "required|date",
             "teacher_id" => "required|exists:teachers,id",
             "section_id" => "required|exists:sections,id",
-            "room_id" => "required|exists:rooms,id",
+            "room_id" => "required|exists:rooms,id"
         ]);
         if ($validator->fails()) {
             return $this->BadRequest($validator, "you have input invalid informations!");
