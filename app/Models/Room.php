@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    public function Schedule(){
-        return $this->belongsToMany(Schedule::class);
+    public function schedules(){
+        return $this->hasMany(Schedule::class);
     }
     protected $fillable = [
         "name",

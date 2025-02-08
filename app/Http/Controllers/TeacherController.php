@@ -9,7 +9,15 @@ class TeacherController extends Controller
 {
     public function all()
     {
-        return $this->ok(Teacher::all(), "all Teachers!");
+        $teachers = Teacher::with("schedules")->get();
+
+        foreach($teachers as $teacher){
+            foreach($teacher->schedules as $schedule){
+                $schedule->room;
+                $schedule->section;
+            }
+        }
+        return $this->ok($teachers, "all Teachers!");
     }
     public function show(Teacher $teacher)
     {

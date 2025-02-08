@@ -8,15 +8,15 @@ class Schedule extends Model
 {
     public function section()
     {
-        return $this->hasOne(Section::class);
+        return $this->belongsTo(Section::class);
     }
     public function room()
     {
-        return $this->hasOne(Room::class);
+        return $this->belongsTo(Room::class);
     }
     public function teacher()
     {
-        return $this->hasOne(Teacher::class);
+        return $this->belongsTo(Teacher::class);
     }
     protected $fillable = [
         "date",

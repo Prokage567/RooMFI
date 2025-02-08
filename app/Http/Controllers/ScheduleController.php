@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ScheduleController extends Controller
 {
@@ -22,7 +23,8 @@ class ScheduleController extends Controller
         }
         $validator = validator($request->all(), [
             "day" => "required|int",
-            "date" => "required|date_format:Y-m-d",
+            "start_date" => "required|date_format:Y-m-d",
+            "end_date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",
             "section_id" => "required|exists:sections,id",
             "room_id" => "required|exists:rooms,id"
@@ -31,7 +33,19 @@ class ScheduleController extends Controller
             return $this->BadRequest($validator, "you have input invalid informations!");
         }
         $validated = $validator->validated();
-        $Schedule = Schedule::create($validated);
+        //it receives the start date
+        $cur = Carbon::parse($validated["start_date"]);
+        //it receives the end date but at the same time it adds another day because of a conflict in the isbefore 
+        //isbefore function is not an equal condition so simple solution is by adding one day
+        $last = Carbon::parse($validated["end_date"])->addDay();
+        //this loops until the end date was met
+        while($cur->isBefore($last)){
+            //adds the data from loop to the date fillable of the schedule
+            $validated["date"] = $cur;
+            Schedule::create($validated);
+            //it adds another 7 days prior to the chosen dayof the week
+            $cur = $cur->addDays(7);
+        }
         return $this->ok($validated, "Succesfully added a Schedule!");
     }
     public function update(Request $request, Schedule $schedule)

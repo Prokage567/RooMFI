@@ -13,6 +13,10 @@ class SectionController extends Controller
    }
    public function show(Section $section)
    {
+      foreach($section->schedules as $schedule){
+         $schedule->room;
+         $schedule->teacher;
+      }
       return $this->ok($section, "Section's name!");
    }
    public function store(Request $request)
