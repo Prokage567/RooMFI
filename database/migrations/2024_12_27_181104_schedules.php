@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('subject');
             $table->enum('day',["1","2","3","4","5","6","7"]);
             $table->date('date');
-            $table->time('time');
+            $table->time ('start_time');
+            $table->time ('end_time');
 
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');

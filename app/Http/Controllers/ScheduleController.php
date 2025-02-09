@@ -22,8 +22,10 @@ class ScheduleController extends Controller
             return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request->all(), [
-            "day" => "required|int",
-            "time" => "required|time",
+            "day" => "required",
+            "subject" => "required",
+            "start_time" => "required|date_format:H:i",
+            "end_time" => "required|date_format:H:i|after:start_time",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",
@@ -40,11 +42,11 @@ class ScheduleController extends Controller
         //isbefore function is not an equal condition so simple solution is by adding one day
         $last = Carbon::parse($validated["end_date"])->addDay();
         //this loops until the end date was met
-        while($cur->isBefore($last)){
+        while ($cur->isBefore($last)) {
             //adds the data from loop to the date fillable of the schedule
             $validated["date"] = $cur;
             Schedule::create($validated);
-            //it adds another 7 days prior to the chosen dayof the week
+            //it adds another 7 days prior to the chosen day of the week
             $cur = $cur->addDays(7);
         }
         return $this->ok($validated, "Succesfully added a Schedule!");
@@ -55,8 +57,10 @@ class ScheduleController extends Controller
             return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request->all(), [
-           "day" => "required|int",
-            "time" => "required|time",
+            "day" => "required",
+            "subject" => "required",
+            "start_time" => "required|date_format:H:i",
+            "end_time" => "required|date_format:H:i|after:start_time",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",

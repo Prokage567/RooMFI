@@ -24,7 +24,8 @@ class Schedule extends Model
         "section_id",
         "room_id",
         "day",
-        "time",
+        "end_time",
+        "start_time",
         "subject",
     ];
 }
