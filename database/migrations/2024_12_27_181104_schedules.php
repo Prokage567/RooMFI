@@ -16,11 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('teacher_id');
             $table->unsignedBigInteger('room_id');
-            $table->time('subject');
-            $table->time('date');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->timestamps();
+            $table->string('subject');
+            $table->enum('day',["1","2","3","4","5","6","7"]);
+            $table->date('date');
 
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
