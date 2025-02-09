@@ -23,8 +23,8 @@ class Schedule extends Model
         "teacher_id",
         "section_id",
         "room_id",
-        "subject",
         "day",
-        "time"
+        "time",
+        "subject",
     ];
 }
