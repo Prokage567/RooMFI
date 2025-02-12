@@ -24,8 +24,8 @@ class ScheduleController extends Controller
         $validator = validator($request->all(), [
             "day" => "required",
             "subject" => "required",
-            "start_time" => "required|date_format:H:i",
-            "end_time" => "required|date_format:H:i|after:start_time",
+            "start_time" => "required|date_format:g:i A",
+            "end_time" => "required|date_format:g:i A|after:start_time",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",
@@ -59,8 +59,8 @@ class ScheduleController extends Controller
         $validator = validator($request->all(), [
             "day" => "required",
             "subject" => "required",
-            "start_time" => "required|date_format:H:i",
-            "end_time" => "required|date_format:H:i|after:start_time",
+            "start_time" => "required|date_format:g:i:A",
+            "end_time" => "required|date_format:g:i:A|after:start_time",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",

@@ -28,4 +28,6 @@ class Schedule extends Model
         "start_time",
         "subject",
     ];
+   
+    public $timestamps = false;
 }

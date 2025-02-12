@@ -9,8 +9,13 @@ class Room extends Model
     public function schedules(){
         return $this->hasMany(Schedule::class);
     }
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
     protected $fillable = [
         "name",
-        "type"
+        "category_id"
     ];
+    
+    public $timestamps = false;
 }

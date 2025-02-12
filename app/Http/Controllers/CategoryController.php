@@ -2,34 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
+use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * Index of all the rooms
-     * Get:/api/room
+     * Index of all the Categories
+     * Get:/api/category
      * @return JsonResponse|mixed
      */
     public function all(){
-        return $this->ok(Room::all(),"all Rooms!");
+        $categories = Category::with("room")->get();
+        foreach($categories as $category){
+            foreach($category->room as $room){
+                $room->room;
+             }
+        }
+        return $this->ok($categories,"all Categories!");
     }
 
     /**
-     * Shows a room by id 
-     * Get:/api/room
-     * @param \App\Models\Room $room
+     * Shows a category by id 
+     * Get:/api/category
+     * @param \App\Models\Category $category
      * @return JsonResponse|mixed
      */
-    public function show(Room $room,Request $request){
-        return $this->ok($room, "Room name!");
+    public function show(Category $category){
+        foreach($category->room as $room){
+            $room->room;
+         }
+        return $this->ok($category, "Category name!");
     }    
     
     /**
      * Creates new data to update
-     * POST: /api/room 
+     * POST: /api/category 
      * @param \Illuminate\Http\Request $request
      * @return JsonResponse|mixed
      */
@@ -38,8 +47,7 @@ class RoomController extends Controller
             return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request -> all(),[
-            "name" => "required|String",
-            "category_id" => "required|exists:categories,id"
+            "category" => "required|String"
         ]);
         if($validator->fails()){
             return $this->BadRequest($validator,"Invalid input!");
@@ -47,25 +55,24 @@ class RoomController extends Controller
 
         $validated = $validator->validated();
 
-        $room = Room::create($validated);
+        $category = Category::create($validated);
 
-        return $this->ok($room,"Room Created!");    
+        return $this->ok($category,"Category Created!");    
     }
 
     /**
      * Updates the data by ID
-     * patch: /api/room/{room}
+     * patch: /api/category/{category}
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Room $room
+     * @param \App\Models\category $category
      * @return JsonResponse|mixed
      */
-    public function update(Request $request,Room $room){
+    public function update(Request $request,Category $category){
         if ($request->user()->role_id != "admin") {
             return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request -> all(),[
-            "name" => "required|String",
-            "category_id" => "required|exists:categories,id"
+           "category" => "required|String"
         ]);
         if($validator->fails()){
             return $this->BadRequest($validator,"Invalid input!");
@@ -73,23 +80,22 @@ class RoomController extends Controller
 
         $validated = $validator->validated();
 
-        $room->update($validated);
+        $category->update($validated);
         
-        return $this->ok($validated,"Room has been updated!");
+        return $this->ok($validated,"category has been updated!");
     }
 
     /**
-     * Deletes room by ID
-     * delete:api/room/{room}
-     * @param \App\Models\Room $room
+     * Deletes category by ID
+     * delete:api/category/{category}
+     * @param \App\Models\Category $category
      * @return JsonResponse|mixed
      */
-    public function delete(Room $room, Request $request){
+    public function delete(Category $category, Request $request){
         if ($request->user()->role_id != "admin") {
             return $this->Forbidden("you are not an Admin!");
         }
-        $room->delete();
-        return $this->ok(null,"Room has been deleted!");
+        $category->delete();
+        return $this->ok(null,"category has been deleted!");
     }
 }
-//done by Clare
