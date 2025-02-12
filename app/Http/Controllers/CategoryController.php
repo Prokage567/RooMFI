@@ -18,6 +18,7 @@ class CategoryController extends Controller
         foreach($categories as $category){
             foreach($category->room as $room){
                 $room->room;
+                $room->schedules;
              }
         }
         return $this->ok($categories,"all Categories!");
