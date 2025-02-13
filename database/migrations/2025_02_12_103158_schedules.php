@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('teacher_id');
             $table->unsignedBigInteger('room_id');
             $table->string('subject');
-            $table->enum('day',["1","2","3","4","5","6","7"]);
+            $table->enum('day',["1"=>"Monday","2"=>"Tuesday","3"=>"Wednesday","4"=>"Thursday","5"=>"Friday","6"=>"Saturday","7"=>"Sunday"]);
             $table->date('date');
             $table->time ('start_time');
             $table->time ('end_time');
