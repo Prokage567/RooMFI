@@ -33,6 +33,7 @@ class CategoryController extends Controller
     public function show(Category $category){
         foreach($category->room as $room){
             $room->room;
+            $room->schedules;
          }
         return $this->ok($category, "Category name!");
     }    

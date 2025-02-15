@@ -28,6 +28,8 @@ class Schedule extends Model
         "start_time",
         "subject",
     ];
-   
+    protected $dates = ["start_time", "end_time"];
+    protected $dateFormat = 'g:i A';
+
     public $timestamps = false;
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,19 @@ class RoomController extends Controller
      * Get:/api/room
      * @return JsonResponse|mixed
      */
-    public function all(){
-        return $this->ok(Room::all(),"all Rooms!");
+    public function all()
+    {
+        return $this->ok(Room::all(), "all Rooms!");
+    }
+    public function search($keywords)
+    {
+        $keywords = array($keywords);
+        $rooms = DB::table("rooms");
+        // dd($keywords);
+        foreach ($keywords as $key) {
+            $rooms->orWhereLike("name", "%$key%");
+        }
+        return $this->ok($rooms->get(), "all Rooms!");
     }
 
     /**
@@ -23,33 +35,36 @@ class RoomController extends Controller
      * @param \App\Models\Room $room
      * @return JsonResponse|mixed
      */
-    public function show(Room $room,Request $request){
+    public function show(Room $room, Request $request)
+    {
         return $this->ok($room, "Room name!");
-    }    
-    
+    }
+
     /**
      * Creates new data to update
      * POST: /api/room 
      * @param \Illuminate\Http\Request $request
      * @return JsonResponse|mixed
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         if ($request->user()->role_id != "admin") {
             return $this->Forbidden("you are not an Admin!");
         }
-        $validator = validator($request -> all(),[
+        $validator = validator($request->all(), [
             "name" => "required|String",
             "category_id" => "required|exists:categories,id"
         ]);
-        if($validator->fails()){
-            return $this->BadRequest($validator,"Invalid input!");
-        };
+        if ($validator->fails()) {
+            return $this->BadRequest($validator, "Invalid input!");
+        }
+        ;
 
         $validated = $validator->validated();
 
         $room = Room::create($validated);
 
-        return $this->ok($room,"Room Created!");    
+        return $this->ok($room, "Room Created!");
     }
 
     /**
@@ -59,23 +74,25 @@ class RoomController extends Controller
      * @param \App\Models\Room $room
      * @return JsonResponse|mixed
      */
-    public function update(Request $request,Room $room){
+    public function update(Request $request, Room $room)
+    {
         if ($request->user()->role_id != "admin") {
             return $this->Forbidden("you are not an Admin!");
         }
-        $validator = validator($request -> all(),[
+        $validator = validator($request->all(), [
             "name" => "required|String",
             "category_id" => "required|exists:categories,id"
         ]);
-        if($validator->fails()){
-            return $this->BadRequest($validator,"Invalid input!");
-        };
+        if ($validator->fails()) {
+            return $this->BadRequest($validator, "Invalid input!");
+        }
+        ;
 
         $validated = $validator->validated();
 
         $room->update($validated);
-        
-        return $this->ok($validated,"Room has been updated!");
+
+        return $this->ok($validated, "Room has been updated!");
     }
 
     /**
@@ -84,12 +101,13 @@ class RoomController extends Controller
      * @param \App\Models\Room $room
      * @return JsonResponse|mixed
      */
-    public function delete(Room $room, Request $request){
+    public function delete(Room $room, Request $request)
+    {
         if ($request->user()->role_id != "admin") {
             return $this->Forbidden("you are not an Admin!");
         }
         $room->delete();
-        return $this->ok(null,"Room has been deleted!");
+        return $this->ok(null, "Room has been deleted!");
     }
 }
 //done by Clare

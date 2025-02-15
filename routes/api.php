@@ -16,6 +16,7 @@ Route::delete("/{section}", [App\http\Controllers\SectionController::class, "del
 
 Route::prefix("/room")->group(function(){
     route::get("/", [App\Http\Controllers\RoomController::class,"all"]);
+    route::get("/search/{room}", [App\Http\Controllers\RoomController::class,"search"]);
     route::get("/{room}", [App\Http\Controllers\RoomController::class,"show"]);
     route::post("/", [App\Http\Controllers\RoomController::class,"store"])->middleware("auth:api");
     route::patch("/{room}", [App\Http\Controllers\RoomController::class,"update"])->middleware("auth:api");
