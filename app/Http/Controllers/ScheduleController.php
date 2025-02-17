@@ -24,8 +24,8 @@ class ScheduleController extends Controller
         $validator = validator($request->all(), [
             "day" => "required:int",
             "subject" => "required",
-            "start_time" => "required|date_format:g:i A",
-            "end_time" => "required|date_format:g:i A|after:start_time",
+            "start_time" => "required|date_format:h:i A",
+            "end_time" => "required|date_format:h:i A|after:start_time",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",
@@ -40,7 +40,6 @@ class ScheduleController extends Controller
         $last = Carbon::parse($validated["end_date"])->addDay();
         $strTime = Carbon::parse($validated["start_time"]);
         $endTime = Carbon::parse($validated["end_time"]);
-        
         $validated["start_time"] = $strTime->format("g:i A");
         $validated["end_time"] = $endTime->format("g:i A");
         
