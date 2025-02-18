@@ -22,7 +22,7 @@ class ScheduleController extends Controller
             return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request->all(), [
-            "day" => "required",
+            "day" => "required:int",
             "subject" => "required",
             "start_time" => "required|date_format:H:i",
             "end_time" => "required|date_format:H:i|after:start_time",
@@ -59,8 +59,8 @@ class ScheduleController extends Controller
         $validator = validator($request->all(), [
             "day" => "required",
             "subject" => "required",
-            "start_time" => "required|date_format:H:i",
-            "end_time" => "required|date_format:H:i|after:start_time",
+            "start_time" => "required|date_format:h:i",
+            "end_time" => "required|date_format:h:i|after:start_time",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",
