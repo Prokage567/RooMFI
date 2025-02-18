@@ -35,9 +35,13 @@ class RoomController extends Controller
      * @param \App\Models\Room $room
      * @return JsonResponse|mixed
      */
-    public function show(Room $room, Request $request)
+    public function show(Room $rooms)
     {
-        return $this->ok($room, "Room name!");
+        $rooms= Room::with("category")->get();
+        foreach($rooms as $room){
+            $room->category;
+        }
+        return $this->ok($rooms, "Room name!");
     }
 
     /**
