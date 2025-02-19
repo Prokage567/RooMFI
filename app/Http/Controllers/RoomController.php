@@ -15,8 +15,11 @@ class RoomController extends Controller
      * @return JsonResponse|mixed
      */
     public function all()
-    {
-        return $this->ok(Room::all(), "all Rooms!");
+    {   $rooms = Room::with("category")->get();
+        foreach ($rooms as $room) {
+            $room->category;
+        }
+        return $this->ok($room, "all Rooms!");
     }
     public function search($keywords)
     {
@@ -37,8 +40,8 @@ class RoomController extends Controller
      */
     public function show(Room $rooms)
     {
-        $rooms= Room::with("category")->get();
-        foreach($rooms as $room){
+        $rooms = Room::with("category")->get();
+        foreach ($rooms as $room) {
             $room->category;
         }
         return $this->ok($rooms, "Room name!");
@@ -61,9 +64,7 @@ class RoomController extends Controller
         ]);
         if ($validator->fails()) {
             return $this->BadRequest($validator, "Invalid input!");
-        }
-        ;
-
+        };
         $validated = $validator->validated();
 
         $room = Room::create($validated);

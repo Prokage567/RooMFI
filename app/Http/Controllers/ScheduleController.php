@@ -10,10 +10,14 @@ class ScheduleController extends Controller
 {
     public function all()
     {
+        
+        
         return $this->ok(Schedule::all(), "all of the Schedules! ");
     }
     public function show(Schedule $schedule)
     {
+        $schedule->start_time = Carbon::parse($schedule->start_time)->format("h:i A");
+        $schedule->end_time = Carbon::parse($schedule->end_time)->format("h:i A");
         return $this->ok($schedule, "A Schedule!");
     }
     public function store(Request $request)
@@ -22,10 +26,10 @@ class ScheduleController extends Controller
             return $this->Forbidden("you are not an Admin!");
         }
         $validator = validator($request->all(), [
-            "day" => "required:int",
+            "day" => "required:string",
             "subject" => "required",
-            "start_time" => "required|date_format:h:i A",
-            "end_time" => "required|date_format:h:i A|after:start_time",
+            "start_time" => "required|date_format:H:i",
+            "end_time" => "required|date_format:H:i|after:start_time",
             "start_date" => "required|date_format:Y-m-d",
             "end_date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",
@@ -38,10 +42,6 @@ class ScheduleController extends Controller
         $validated = $validator->validated();
         $cur = Carbon::parse($validated["start_date"]);
         $last = Carbon::parse($validated["end_date"])->addDay();
-        $strTime = Carbon::parse($validated["start_time"]);
-        $endTime = Carbon::parse($validated["end_time"]);
-        $validated["start_time"] = $strTime->format("g:i A");
-        $validated["end_time"] = $endTime->format("g:i A");
         
         while ($cur->isBefore($last)) {
             $validated["date"] = $cur;
