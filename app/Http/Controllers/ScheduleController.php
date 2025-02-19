@@ -16,8 +16,6 @@ class ScheduleController extends Controller
     }
     public function show(Schedule $schedule)
     {
-        $schedule->start_time = Carbon::parse($schedule->start_time)->format("h:i A");
-        $schedule->end_time = Carbon::parse($schedule->end_time)->format("h:i A");
         return $this->ok($schedule, "A Schedule!");
     }
     public function store(Request $request)
