@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -15,6 +16,9 @@ class TeacherController extends Controller
             foreach($teacher->schedules as $schedule){
                 $schedule->room;
                 $schedule->section;
+                
+        $schedule->start_time = Carbon::parse($schedule->start_time)->format("h:i A");
+        $schedule->end_time = Carbon::parse($schedule->end_time)->format("h:i A");
             }
         }
         return $this->ok($teachers, "all Teachers!");
