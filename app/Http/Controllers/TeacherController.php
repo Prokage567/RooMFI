@@ -12,13 +12,12 @@ class TeacherController extends Controller
     {
         $teachers = Teacher::with("schedules")->get();
 
-        foreach($teachers as $teacher){
-            foreach($teacher->schedules as $schedule){
+        foreach ($teachers as $teacher) {
+            foreach ($teacher->schedules as $schedule) {
                 $schedule->room;
                 $schedule->section;
-                
-        $schedule->start_time = Carbon::parse($schedule->start_time)->format("h:i A");
-        $schedule->end_time = Carbon::parse($schedule->end_time)->format("h:i A");
+                $schedule->start_time = Carbon::parse($schedule->start_time)->format("h:i A");
+                $schedule->end_time = Carbon::parse($schedule->end_time)->format("h:i A");
             }
         }
         return $this->ok($teachers, "all Teachers!");

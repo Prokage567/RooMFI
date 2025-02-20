@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Models\Schedule;
 
 class CategoryController extends Controller
 {
@@ -17,9 +19,11 @@ class CategoryController extends Controller
         $categories = Category::with("room")->get();
         foreach($categories as $category){
             foreach($category->room as $room){
-                $room->room;
-                $room->schedules;
-             }
+                foreach($room->schedules as $sched){
+                    $sched->start_time = Carbon::parse($sched->start_time)->format("h:i A");
+                    $sched->end_time = Carbon::parse($sched->end_time)->format("h:i A");
+                }
+            }
         }
         return $this->ok($categories,"all Categories!");
     }

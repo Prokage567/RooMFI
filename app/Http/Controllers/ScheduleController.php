@@ -10,8 +10,6 @@ class ScheduleController extends Controller
 {
     public function all()
     {
-        
-        
         return $this->ok(Schedule::all(), "all of the Schedules! ");
     }
     public function show(Schedule $schedule)
