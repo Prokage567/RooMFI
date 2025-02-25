@@ -12,12 +12,12 @@ class TeacherController extends Controller
     {
         $teachers = Teacher::with("schedules")->get();
 
-        foreach($teachers as $teacher){
-            foreach($teacher->schedules as $schedule){
+        foreach ($teachers as $teacher) {
+            foreach ($teacher->schedules as $schedule) {
                 $schedule->room;
                 $schedule->section;
-        $schedule->start_time = Carbon::parse($schedule->start_time)->format("h:i A");
-        $schedule->end_time = Carbon::parse($schedule->end_time)->format("h:i A");
+                $schedule->start_time = Carbon::parse($schedule->start_time)->format("h:i A");
+                $schedule->end_time = Carbon::parse($schedule->end_time)->format("h:i A");
             }
         }
         return $this->ok($teachers, "all Teachers!");
@@ -33,7 +33,7 @@ class TeacherController extends Controller
         }
         $validator = validator($request->all(), [
             "name" => "required|string|uppercase",
-            "technology_course" => "required|string|uppercase",
+            "subject" => "required|string|uppercase",
         ]);
         if ($validator->fails()) {
             return $this->BadRequest($validator, "invalid input!");
@@ -51,7 +51,7 @@ class TeacherController extends Controller
         }
         $validator = validator($request->all(), [
             "name" => "required|string|uppercase",
-            "technology_course" => "required|string|uppercase",
+            "subject" => "required|string|uppercase",
         ]);
         if ($validator->fails()) {
             return $this->BadRequest($validator, "invalid input!");

@@ -11,6 +11,6 @@ class Teacher extends Model
     }
     protected $fillable = [
         "name",
-        "technology_course"
+        "subject"
     ];
 }

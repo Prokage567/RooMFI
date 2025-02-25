@@ -17,8 +17,8 @@ class SectionController extends Controller
       foreach($section->schedules as $schedule){
          $schedule->room;
          $schedule->teacher;
-        $schedule->start_time = Carbon::parse($schedule->start_time)->format("h:i A");
-        $schedule->end_time = Carbon::parse($schedule->end_time)->format("h:i A");
+         $schedule->start_time = Carbon::parse($schedule->start_time)->format("h:i A");
+         $schedule->end_time = Carbon::parse($schedule->end_time)->format("h:i A");
       }
       return $this->ok($section, "Section's name!");
    }
