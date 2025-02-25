@@ -33,7 +33,7 @@ class TeacherController extends Controller
         }
         $validator = validator($request->all(), [
             "name" => "required|string|uppercase",
-            "technology_course" => "required|string|uppercase",
+            "subject" => "required|string|uppercase",
         ]);
         if ($validator->fails()) {
             return $this->BadRequest($validator, "invalid input!");
@@ -51,7 +51,7 @@ class TeacherController extends Controller
         }
         $validator = validator($request->all(), [
             "name" => "required|string|uppercase",
-            "technology_course" => "required|string|uppercase",
+            "subject" => "required|string|uppercase",
         ]);
         if ($validator->fails()) {
             return $this->BadRequest($validator, "invalid input!");
