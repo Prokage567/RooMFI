@@ -15,9 +15,13 @@ class RoomController extends Controller
      * @return JsonResponse|mixed
      */
     public function all()
-    {   $rooms = Room::with("category")->get();
+    {
+        $rooms = Room::all();
         foreach ($rooms as $room) {
-            $room->category;
+            $room = Room::with("category")->get();
+            foreach($room as $room_cat){
+                $room_cat->category;
+            }
         }
         return $this->ok($room, "all Rooms!");
     }
