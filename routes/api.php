@@ -46,10 +46,10 @@ Route::prefix("/schedule")->group(function(){
     Route::delete("/{schedule}", [App\http\Controllers\ScheduleController::class, "delete"])->middleware("auth:api");
 });
 
-Route::prefix("/request")->group(function(){
+Route::prefix("/requests")->group(function(){
     Route::get("/", [App\http\Controllers\RequestController::class, "all"]);
     Route::post("/", [App\http\Controllers\RequestController::class, "store"])->middleware("auth:api");
-    Route::get("/{request}", [App\http\Controllers\RequestController::class, "show"]);
-    Route::patch("/{request}", [App\http\Controllers\RequestController::class, "update"])->middleware("auth:api");
-    Route::delete("/{request}", [App\http\Controllers\RequestController::class, "delete"])->middleware("auth:api");
+    Route::get("/{requests}", [App\http\Controllers\RequestController::class, "show"]);
+    Route::patch("/{requests}", [App\http\Controllers\RequestController::class, "update"])->middleware("auth:api");
+    Route::delete("/{requests}", [App\http\Controllers\RequestController::class, "delete"])->middleware("auth:api");
 });
