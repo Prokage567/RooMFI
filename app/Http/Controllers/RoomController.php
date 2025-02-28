@@ -28,8 +28,7 @@ class RoomController extends Controller
     public function search($keywords)
     {
         $keywords = array($keywords);
-        $rooms = DB::table("rooms");
-        // dd($keywords);
+        $rooms = DB::table("room");
         foreach ($keywords as $key) {
             $rooms->orWhereLike("name", "%$key%");
         }

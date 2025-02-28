@@ -3,11 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
+    public function search($keywords)
+    {
+        $keywords = array($keywords);
+        $teachers = DB::table("teachers");
+        foreach ($keywords as $key) {
+            $teachers->select("id")->orWhereLike("name","%$key%");
+        }
+        return $this->ok($teachers->get(), "all Teachers!");
+    }
+
     public function all()
     {
         $teachers = Teacher::with("schedules")->get();

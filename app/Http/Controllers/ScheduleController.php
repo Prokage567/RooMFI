@@ -55,8 +55,7 @@ class ScheduleController extends Controller
             "subject" => "required",
             "start_time" => "required|date_format:H:i",
             "end_time" => "required|date_format:H:i|after:start_time",
-            "start_date" => "required|date_format:Y-m-d",
-            "end_date" => "required|date_format:Y-m-d",
+            "date" => "required|date_format:Y-m-d",
             "teacher_id" => "required|exists:teachers,id",
             "section_id" => "required|exists:sections,id",
             "room_id" => "required|exists:rooms,id"
@@ -65,16 +64,7 @@ class ScheduleController extends Controller
             return $this->BadRequest($validator, "you have input invalid informations!");
         }
         $validated = $validator->validated();
-        $cur = Carbon::parse($validated["start_date"]);
-        $last = Carbon::parse($validated["end_date"])->addDay();
-        $validated["day"] = Carbon::parse($cur)->format("l");
-        
-        while ($cur->isBefore($last)) {
-            $validated["date"] = $cur;
-            $schedule->update($validated);
-            $cur = $cur->addDays(7);
-        }
-
+        $schedule->update($validated);
         return $this->ok($validated, "Succesfully updated a Schedule!");
     }
     public function delete(Request $request, Schedule $schedule)

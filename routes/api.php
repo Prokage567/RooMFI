@@ -36,6 +36,7 @@ Route::prefix("/teacher")->group(function () {
     Route::get("/{teacher}", [App\http\Controllers\TeacherController::class, "show"]);
     Route::patch("/{teacher}", [App\http\Controllers\TeacherController::class, "update"])->middleware("auth:api");
     Route::delete("/{teacher}", [App\http\Controllers\TeacherController::class, "delete"])->middleware("auth:api");
+    Route::get("/search/{teacher}", [App\http\Controllers\TeacherController::class, "search"]);
 });
 
 Route::prefix("/schedule")->group(function(){
