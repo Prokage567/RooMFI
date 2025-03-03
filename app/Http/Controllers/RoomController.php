@@ -18,7 +18,7 @@ class RoomController extends Controller
     {
         $rooms = Room::all();
         foreach ($rooms as $room) {
-            $room = Room::with("category")->get();
+            $room = Room::with(relations: "category")->get();
             foreach($room as $room_cat){
                 $room_cat->category;
             }
@@ -28,9 +28,9 @@ class RoomController extends Controller
     public function search($keywords)
     {
         $keywords = array($keywords);
-        $rooms = DB::table("room");
+        $rooms = DB::table("rooms");
         foreach ($keywords as $key) {
-            $rooms->orWhereLike("name", "%$key%");
+            $rooms->orWhereLike("name", "$key");
         }
         return $this->ok($rooms->get(), "all Rooms!");
     }
